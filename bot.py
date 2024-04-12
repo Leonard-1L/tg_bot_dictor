@@ -1,7 +1,5 @@
-import logging
 import telebot
 from telebot.types import Message
-from utils import load_users_data, save_users_data
 from gpt import *
 from database import *
 from config import *
@@ -15,12 +13,17 @@ logging.basicConfig(
     filemode="w"
 )
 
+create_table("speech_kit.db")
+
 
 @bot.message_handler(commands=['start'])
 def start(message: Message):
     user_id = message.from_user.id
+    logging.info(f"Пользователь {message.from_user.username} с ID {message.from_user.id} присоеденился к нам!")
     bot.send_message(user_id, f"Привет, {message.from_user.username}\n"
-                              f"Я бот-диктор, озвучу почти всё, что ты мне напишешь.")
+                              f"Я бот-диктор, озвучу почти всё, что ты мне напишешь.\n"
+                              f"Используй команду /tts, а затем пришли нужный текст для озвучки.\n"
+                              f"Если на каком-то моменте ты не понял, то пропиши /help. Там подробно расписано, что делать.")
 
 
 @bot.message_handler(commands=['tts'])
@@ -34,25 +37,24 @@ def tts(message):
     user_id = message.from_user.id
     text = message.text
 
-    # Проверка, что сообщение действительно текстовое
     if message.content_type != 'text':
         bot.send_message(user_id, 'Отправь текстовое сообщение')
         return
 
-        # Считаем символы в тексте и проверяем сумму потраченных символов
+    logging.info(f"Пользователь {message.from_user.username} с ID {message.from_user.id} попросил озвучить '{text}'")
+
     text_symbol = is_tts_symbol_limit(message, text)
+
     if text_symbol is None:
         return
 
-    # Записываем сообщение и кол-во символов в БД
     insert_row(user_id, text, text_symbol)
 
-    # Получаем статус и содержимое ответа от SpeechKit
-    status, content = text_to_speech(text)
+    status, content = make_requests(text)
 
-    # Если статус True - отправляем голосовое сообщение, иначе - сообщение об ошибке
     if status:
-        bot.send_voice(user_id, content)
+        bot.reply_to(message=message, text=content)
+        logging.info("Запись успешно отправлена.")
     else:
         bot.send_message(user_id, content)
 
@@ -61,18 +63,38 @@ def is_tts_symbol_limit(message, text):
     user_id = message.from_user.id
     text_symbols = len(text)
 
-    # Функция из БД для подсчёта всех потраченных пользователем символов
     all_symbols = count_all_symbol(user_id) + text_symbols
-
-    # Сравниваем all_symbols с количеством доступных пользователю символов
+    logging.info(
+        f"Символов было потрачено на запросе {text_symbols}. Всего было потрачено {all_symbols}. Осталось символов: {MAX_USER_TTS_SYMBOLS - all_symbols}")
     if all_symbols >= MAX_USER_TTS_SYMBOLS:
         msg = f"Превышен общий лимит SpeechKit TTS {MAX_USER_TTS_SYMBOLS}. Использовано: {all_symbols} символов. Доступно: {MAX_USER_TTS_SYMBOLS - all_symbols}"
         bot.send_message(user_id, msg)
         return None
 
-    # Сравниваем количество символов в тексте с максимальным количеством символов в тексте
-    if text_symbols >= MAX_TTS_SYMBOLS:
-        msg = f"Превышен лимит SpeechKit TTS на запрос {MAX_TTS_SYMBOLS}, в сообщении {text_symbols} символов"
+    if text_symbols >= MAX_REQUESTS_SYMBOLS:
+        msg = f"Превышен лимит SpeechKit TTS на запрос {MAX_REQUESTS_SYMBOLS}, в сообщении {text_symbols} символов"
         bot.send_message(user_id, msg)
         return None
     return len(text)
+
+
+@bot.message_handler(commands=['help'])
+def send_help(message: Message):
+    logging.info(f"Пользователь {message.from_user.username} с ID {message.from_user.id} запросил помощь.")
+    bot.send_message(message.from_user.id, "Чтобы бот озвучил текст вы должны сперва прописать команду /tts.\n"
+                                           "Затем выбрать нужный голос и эмоцию диктора, расставляя ударения, паузы и акценты если это требуется.\b"
+                                           "Вскоре, если ваш текст меньше 250 символов, то бот пришлет вам аудио в течении нескольки секунд.\n"
+                                           "Отсылаю язык синтеза.")
+    with open("help_media/sintes_lang.png", "rb") as foto:
+        bot.send_photo(message.from_user.id, foto)
+
+
+@bot.message_handler()
+def repeat(message: Message):
+    bot.reply_to(message=message,
+                 text="Извините, но я вас не распонял. Удостоверьтесь, что вы следовали инструкции. Чтобы ее просмотреть пропишите /help.")
+
+
+if __name__ == '__main__':
+    logging.info("Бот запущен")
+    bot.infinity_polling(none_stop=True, timeout=130)

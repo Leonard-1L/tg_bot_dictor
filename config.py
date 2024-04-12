@@ -1,2 +1,5 @@
-MAX_TTS_SYMBOLS = 250 #
-MAX_USER_TTS_SYMBOLS = 2000
+MAX_REQUESTS_SYMBOLS = 250  # Максимально количество символов на один запрос
+MAX_USER_TTS_SYMBOLS = 2000  # Максимально количество символов для озвучки текста на пользователя
+
+iam_token = "t1.9euelZqJzseXkZCakomQkZKex8qTz-3rnpWajMbNmcmWi5GYz5CTkJPJkZrl8_cFQRpP-e8vHFVk_N3z90VvF0_57y8cVWT8zef1656VmsaWkpWMzc-TjoyXzpKTypKM7_zF656VmsaWkpWMzc-TjoyXzpKTypKMveuelZqWjM-RypyTjpKJipyKj5eMnLXehpzRnJCSj4qLmtGLmdKckJKPioua0pKai56bnoue0oye.f3PolIKmGzbdDD4LWaVI6XaztyC05cD9XmXAXK7dJ6WIT7yqu2wFX4YnKIGQ0vPFEmGhEG4Ccb8d8TNid7E4Cw"
+folder_id = "b1gpkb6hb5db01d7ohct"

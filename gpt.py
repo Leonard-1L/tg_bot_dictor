@@ -1,21 +1,27 @@
 import logging
-
 import requests
+from config import iam_token, folder_id
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    filename="logs.txt",
+    filemode="w"
+)
 
 
 def make_requests(user_text: str):
     headers = {
-        'Authorisation': "t1.9eumcmWi5GYz5CTkJPJkZrl3z9zESHU_573NANgz-zef1656VmpiQz4qNmJiVnpzPjpeckpGc7_zF656VmpiQz4qNmJiVnpzPjpeckpGcveuelZqSmJKMjp6JzY2Uj4qQm4zPyLXehpzRnJCSj4qLmtGLmdKckJKPioua0pKai56bnoue0oye.DzU2CWUlWrf9QmTXU4IN5t1af7zy-T2GTvHTkgvG45enUU4WPYyCpK3OAiTeerhk4CCnKjwc9joVMNCRszzsBA"
+        'Authorization': f'Bearer {iam_token}'
     }
     data = {
         "text": user_text,
         'lang': 'ru=RU',
         'voice': 'zahar',
-        'folderId': "b1gpkb6hb5db01d7ohct"
+        'folderId': folder_id
     }
     response = requests.post('https://tts.api.cloud.yandex.net/speech/v1/tts:synthesize', headers=headers, data=data)
     if response.status_code == 200:
-        return response.content
+        return True, response.content
     else:
-        logging.error(f"о НЬЕТ!1! КАКАЯТО хЕРНЯ СЛУЧТЛАСЬ:{response.status_code}")
-
+        logging.error(f"0 НЬЕТ!1! КАКАЯТО ФИНГНГЯ СЛУЧТЛАСЬ. КОД ОШИБКИ:{response.status_code}")
+        return False, f"При запросе произошла непредвиденная ошибка. Статус ошибки: {response.status_code}"
