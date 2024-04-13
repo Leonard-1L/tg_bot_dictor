@@ -4,7 +4,7 @@ from gpt import *
 from database import *
 from config import *
 
-bot = telebot.TeleBot(token="6565406578:AAHJXXP9C3YuGGrZavTnkhlJTq4hQl1V3KE")
+bot = telebot.TeleBot(token=BOT_TOKEN)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -53,7 +53,7 @@ def tts(message):
     status, content = make_requests(text)
 
     if status:
-        bot.reply_to(message=message, text=content)
+        bot.send_voice(user_id, content)
         logging.info("Запись успешно отправлена.")
     else:
         bot.send_message(user_id, content)
@@ -82,17 +82,23 @@ def is_tts_symbol_limit(message, text):
 def send_help(message: Message):
     logging.info(f"Пользователь {message.from_user.username} с ID {message.from_user.id} запросил помощь.")
     bot.send_message(message.from_user.id, "Чтобы бот озвучил текст вы должны сперва прописать команду /tts.\n"
-                                           "Затем выбрать нужный голос и эмоцию диктора, расставляя ударения, паузы и акценты если это требуется.\b"
-                                           "Вскоре, если ваш текст меньше 250 символов, то бот пришлет вам аудио в течении нескольки секунд.\n"
-                                           "Отсылаю язык синтеза.")
+                                           "Затем расставить знаки ударения, паузы и акценты если это требуется.\n"
+                                           "Вскоре, если ваш текст меньше 250 символов и вы потратили всего меньше 2000 символов, то бот пришлет вам аудио в течении нескольки секунд.\n"
+                                           "Отсылаю язык синтеза:")
     with open("help_media/sintes_lang.png", "rb") as foto:
         bot.send_photo(message.from_user.id, foto)
 
 
+@bot.message_handler(commands=['_logs_'])
+def send_logs(message: Message):
+    logging.info(f'{message.from_user.username} с ID {message.from_user.id} запросил логи')
+    bot.send_document(message.from_user.id, 'logs.txt')
+
+
 @bot.message_handler()
-def repeat(message: Message):
+def else_message(message: Message):
     bot.reply_to(message=message,
-                 text="Извините, но я вас не распонял. Удостоверьтесь, что вы следовали инструкции. Чтобы ее просмотреть пропишите /help.")
+                 text="Извините, но я вас не распонял. Удостоверьтесь, что вы следовали инструкции. Чтобы ее просмотреть - пропишите /help.")
 
 
 if __name__ == '__main__':

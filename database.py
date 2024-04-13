@@ -49,3 +49,6 @@ def count_all_symbol(user_id, db_name="speech_kit.db"):
                 return 0
     except Exception as e:
         logging.error(f"Error: {e} in func count_all_symbol")
+
+
+def count_all_simvols()
