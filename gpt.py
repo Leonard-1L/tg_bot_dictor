@@ -10,7 +10,7 @@ logging.basicConfig(
 )
 
 
-def make_requests(user_text: str):
+def make_voice(user_text: str):
     headers = {
         'Authorization': f'Bearer {iam_token}'
     }

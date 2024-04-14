@@ -50,10 +50,11 @@ def tts(message):
 
     insert_row(user_id, text, text_symbol)
 
-    status, content = make_requests(text)
+    status, content = make_voice(text)
 
     if status:
         bot.send_voice(user_id, content)
+        count_all_simvols_in_file()
         logging.info("Запись успешно отправлена.")
     else:
         bot.send_message(user_id, content)
@@ -83,7 +84,7 @@ def send_help(message: Message):
     logging.info(f"Пользователь {message.from_user.username} с ID {message.from_user.id} запросил помощь.")
     bot.send_message(message.from_user.id, "Чтобы бот озвучил текст вы должны сперва прописать команду /tts.\n"
                                            "Затем расставить знаки ударения, паузы и акценты если это требуется.\n"
-                                           "Вскоре, если ваш текст меньше 250 символов и вы потратили всего меньше 2000 символов, то бот пришлет вам аудио в течении нескольки секунд.\n"
+                                           f"Вскоре, если ваш текст меньше {MAX_REQUESTS_SYMBOLS} символов и вы потратили всего меньше {MAX_USER_TTS_SYMBOLS} символов, то бот пришлет вам аудио в течении нескольки секунд.\n"
                                            "Отсылаю язык синтеза:")
     with open("help_media/sintes_lang.png", "rb") as foto:
         bot.send_photo(message.from_user.id, foto)

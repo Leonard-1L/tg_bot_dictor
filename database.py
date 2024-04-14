@@ -1,5 +1,6 @@
 import logging
 import sqlite3
+import time
 
 logging.basicConfig(
     level=logging.INFO,
@@ -51,4 +52,17 @@ def count_all_symbol(user_id, db_name="speech_kit.db"):
         logging.error(f"Error: {e} in func count_all_symbol")
 
 
-def count_all_simvols()
+def count_all_simvols_in_file(column_name="tts_symbols", table_name="messages", db_name="speech_kit.db"):
+    """Функция для того, чтобы контролировать кол-во всего затраченных токенов"""
+    try:
+        with sqlite3.connect(db_name) as conn:
+            cursor = conn.cursor()
+            query = f"SELECT SUM({column_name}) FROM {table_name}"
+            cursor.execute(query)
+            result = cursor.fetchone()[0]
+
+        with open("count_tokens.txt", 'a') as file:
+            file.write(
+                f"{time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))} - затрачено всего токенов {result}" + '\n')
+    except Exception as e:
+        logging.error(f"Error: {e} in func count_all_simvols_in_file")

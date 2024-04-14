@@ -4,14 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="02f61bff-a4bf-4445-be7f-3bba57e23b20" name="Changes" comment="Distribution of necessary commands, code modification">
+    <list default="true" id="02f61bff-a4bf-4445-be7f-3bba57e23b20" name="Changes" comment="The interaction with the bot has been finalized, work has begun on saving all spent characters into a separate file.">
       <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gpt.py" beforeDir="false" afterPath="$PROJECT_DIR$/gpt.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logs.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/speech_kit.db" beforeDir="false" afterPath="$PROJECT_DIR$/speech_kit.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/speech_kit.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +29,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -108,12 +113,21 @@
       <option name="project" value="LOCAL" />
       <updated>1712954476923</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="The interaction with the bot has been finalized, work has begun on saving all spent characters into a separate file.">
+      <option name="closed" value="true" />
+      <created>1713037762760</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1713037762760</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
     <MESSAGE value="Distribution of necessary commands, code modification" />
-    <option name="LAST_COMMIT_MESSAGE" value="Distribution of necessary commands, code modification" />
+    <MESSAGE value="The interaction with the bot has been finalized, work has begun on saving all spent characters into a separate file." />
+    <option name="LAST_COMMIT_MESSAGE" value="The interaction with the bot has been finalized, work has begun on saving all spent characters into a separate file." />
   </component>
 </project>

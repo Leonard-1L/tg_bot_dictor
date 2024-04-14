@@ -1,6 +1,8 @@
-MAX_REQUESTS_SYMBOLS = 250  # Максимально количество символов на один запрос
-MAX_USER_TTS_SYMBOLS = 4000  # Максимально количество символов для озвучки текста на пользователя
+MAX_REQUESTS_SYMBOLS = 300  # Максимально количество символов на один запрос
+MAX_USER_TTS_SYMBOLS = 2000  # Максимально количество символов для озвучки текста на пользователя
 
-BOT_TOKEN = "6565406578:AAHJXXP9C3YuGGrZavTnkhlJTq4hQl1V3KE"
-iam_token = "t1.9euelZrGyZONx5rMm5WVyMvLxorLk-3rnpWajMbNmcmWi5GYz5CTkJPJkZrl9Pc5fBRP-e9NWzma3fT3eSoST_nvTVs5ms3n9euelZqKjIuck8iWx52Pk5Wcl57HmO_8xeuelZqKjIuck8iWx52Pk5Wcl57HmL3rnpWai5KSzM3Hm5nPnc_OlpPNm4q13oac0ZyQko-Ki5rRi5nSnJCSj4qLmtKSmouem56LntKMng.5qtSEmGv93cXO-cICArlal9oFaI5gseZp8pr-_suUqENR_o5xTOj6P_LFO6ynG4xMvPrRInJiY_UUWeEzFAhDw"
-folder_id = "b1gpkb6hb5db01d7ohct"
+"""Поскольку вы на вебинаре сказали, что неудобно проверять с .env, то пишем все секретные данные в конфиге))"""
+
+BOT_TOKEN = ""  # 6565406578:AAHJXXP9C3Y...
+iam_token = ""  # t1.9euelZrMmpmVi4vJyYqai5iVksnIl-3rnpWajM...
+folder_id = ""  # b1gpkb6...
