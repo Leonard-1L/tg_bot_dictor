@@ -1,6 +1,6 @@
 import logging
 import requests
-from config import iam_token, folder_id
+from config import iam_token, folder_id, TEXT_VOICE
 
 logging.basicConfig(
     level=logging.INFO,
@@ -17,7 +17,7 @@ def make_voice(user_text: str):
     data = {
         "text": user_text,
         'lang': 'ru=RU',
-        'voice': 'marina',  # madirus
+        'voice': TEXT_VOICE,
         'folderId': folder_id
     }
     response = requests.post('https://tts.api.cloud.yandex.net/speech/v1/tts:synthesize', headers=headers, data=data)

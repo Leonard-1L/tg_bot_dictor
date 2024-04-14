@@ -90,7 +90,7 @@ def send_help(message: Message):
         bot.send_photo(message.from_user.id, foto)
 
 
-@bot.message_handler(commands=['_logs_'])
+@bot.message_handler(commands=['debug'])
 def send_logs(message: Message):
     logging.info(f'{message.from_user.username} с ID {message.from_user.id} запросил логи')
     bot.send_document(message.from_user.id, 'logs.txt')
